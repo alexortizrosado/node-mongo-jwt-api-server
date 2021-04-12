@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Blog Post API</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <style>
+      body {
+        padding: 1rem;
+        background-color: #E6E6E6;
+        color: black;
+      }
+      .disclaimer * {
+        color: #282A36;
+      }
+      hr {
+        border-top: 1px solid white;
+      }
+      pre, code {
+        font-family: Consolas,"courier new";
+        font-weight: 700;
+        color: #FF5555;
+        padding: 2px;
+        font-size: 105%;
+      }
+      .card {
+        background-color: #282A36;
+        color: #b2beb5;
+      }
+      .card-header {
+        border-bottom: 1px solid white;
+      }
+      strong {
+        color: #F5F5F5;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1 class="mt-3 p-3">Posts API with Authentication</h1>
+      <h2 class="mt-3 p-3">Authentication</h2>
+        <div class="card p-3 mb-4">
+          <div class="card-header">
+            <code>POST /auth/register</code>
+          </div>
+          <div class="card-body">
+            <p class="card-text">Registers a user with a username and password</p>
+            <strong>Request Body</strong>
+            <div class="mb-3">
+              <div><strong>username:</strong> must be alphanumeric, minimum 3 chars, maximum 30 chars, required</div>
+              <div><strong>password:</strong> required</div>
+<pre>
+{
+  username: String,
+  password: String,
+}
+</pre>
+            </div>
+            <strong>Response Body</strong>
+            <div>
+<pre>
+{
+  data: {
+    token: "JWT_TOKEN"
+  }
+}
+</pre>
+            </div>
+          </div>
+        </div>
+        <div class="card p-3 mb-4">
+          <div class="card-header">
+            <code>POST /auth/login</code>
+          </div>
+          <div class="card-body">
+            <p class="card-text">Logs in a registered user</p>
+            <strong>Request Body</strong>
+            <div class="mb-3">
+              Must match record in database:
+<pre>
+{
+  username: String,
+  password: String,
+}
+</pre>
+            </div>
+            <strong>Response Body</strong>
+            <div>
+<pre>
+{
+  data: {
+    token: "JWT_TOKEN"
+  }
+}
+</pre>
+            </div>
+          </div>
+        </div>
+      <hr/>
+      <h2 class="mt-3 p-3">Posts</h2>
+      <div class="disclaimer">
+        <strong>IMPORTANT NOTE: None of the Post Routes will work unless you add the <code>token</code> (received from registering/logging in) header to the requests</strong>
+      </div>
+      <div class="card p-3 mb-4">
+        <div class="card-header">
+          <code>GET /posts</code>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Returns all post records</p>
+          <strong>Response Body</strong>
+          <div>
+<pre>
+{
+  _id: String,
+  title: String,
+  description: String,
+  date: Date
+}
+</pre>
+          </div>
+        </div>
+      </div>
+      <div class="card p-3 mb-4">
+        <div class="card-header">
+          <code>GET /posts/:postId</code>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Returns a specific post record</p>
+          <strong>Parameters</strong>
+          <ul>
+            <li>
+              <code>:postId</code>
+              <span>The ID of the post you want to retrieve information for</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card p-3 mb-4">
+        <div class="card-header">
+          <code>POST /posts</code>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Submits a post to the database</p>
+          <strong>Request Body</strong>
+          <ul>
+            <li>
+<pre>
+{
+  title: String,
+  description: String,
+  author: String,
+}
+</pre>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card p-3 mb-4">
+        <div class="card-header">
+          <code>PATCH /posts/:postId</code>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Updates a post in the database</p>
+          <strong>Parameters</strong>
+          <ul>
+            <li>
+              <code>:postId</code>
+              <span>The ID of the post you want to retrieve information for</span>
+            </li>
+          </ul>
+          <strong>Request Body</strong>
+          <ul>
+            <li>
+<pre>
+{
+  title: String,
+}
+</pre>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card p-3 mb-4">
+        <div class="card-header">
+          <code>DELETE /posts/:postId</code>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Removes a post in the database</p>
+          <strong>Parameters</strong>
+          <ul>
+            <li>
+              <code>:postId</code>
+              <span>The ID of the post you want to retrieve information for</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

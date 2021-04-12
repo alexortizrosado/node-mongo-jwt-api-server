@@ -1,0 +1,30 @@
+{
+  "name": "node-mongo-jwt-api-server",
+  "version": "1.0.0",
+  "description": "Node.js + MongoDB API with JWT authentication",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexortizrosado/node-mongo-jwt-api-server.git"
+  },
+  "author": "Alex Ortiz-Rosado",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexortizrosado/node-mongo-jwt-api-server/issues"
+  },
+  "homepage": "https://github.com/alexortizrosado/node-mongo-jwt-api-server#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.3",
+    "nodeman": "^1.1.2"
+  }
+}
