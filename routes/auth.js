@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const joi = require("joi");
 
 const User = require("../models/User.js");
 
-router.post("/auth/register", async (req, res) => {
+router.post("/register", async (req, res) => {
 	try {
 		const { error } = validate(req.body);
 		if (error) return res.status(400).send(error?.details[0].message);
@@ -41,9 +42,9 @@ router.post("/auth/register", async (req, res) => {
 	}
 });
 
-router.post("/auth/login", async (req, res) => {
+router.post("/login", async (req, res) => {
 	try {
-		const { error } = authValidation(req.body);
+		const { error } = validate(req.body);
 		if (error) return res.status(400).send(error?.details[0].message);
 
 		const user = await User.findOne({
@@ -77,9 +78,9 @@ router.post("/auth/login", async (req, res) => {
 });
 
 const validate = (body) => {
-  const validationSchema = Joi.object({
-		username: Joi.string().alphanum().min(3).max(30).required(),
-		password: Joi.string()
+  const validationSchema = joi.object({
+		username: joi.string().alphanum().min(3).max(30).required(),
+		password: joi.string()
 			.pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
 			.required(),
 	});
